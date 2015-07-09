@@ -31,36 +31,42 @@ end
 
 
 def bubble_sort(arr)
-
   swap = false
-
   arr.each_with_index do |ele, i|
-    
     swap = false
-    
     (arr.length-1-i).times do |j|
-
       if arr[j] > arr[j+1]
         arr[j], arr[j+1] = arr[j+1], arr[j]
-        swap = true 
+        swap = true
       end
-
+      print [i, j]
     end
-
     break unless swap
-
   end
-
   arr
-
 end
 
 def merge_sort(arr)
+  if arr.length == 1 #|| arr.empty?
+    return arr
+  else
+    arr1 = merge_sort(arr[0..(arr.length/2 - 1)])
+    arr2 = merge_sort(arr[(arr.length/2)..-1])
+  end
+  merge(arr1,arr2)
 end
 
-
-
-
+def merge(arr1, arr2)
+  result = []
+  until arr1.empty? || arr2.empty?
+    if arr1[0] > arr2[0]
+      result  << arr2.shift
+    else
+      result << arr1.shift
+    end
+  end
+  result.concat(arr1).concat(arr2)
+end
 
 
 
