@@ -107,35 +107,28 @@ def suppress_output
   retval
 end
 
-def quick_sort(arr)
-  if arr.length < 2
-    return arr
-  else
-    pivot_index = partition_array(arr)
-    quick_sort(arr[0..pivot_index-1])
-    quick_sort(arr[pivot_index+1..-1])
+def quick_sort(arr, left=0, right=arr.length-1)
+  unless arr[left..right].length < 2
+    pivot_index = partition_array(arr, left, right)
+    quick_sort(arr, left, pivot_index-1)
+    quick_sort(arr, pivot_index+1, right)
   end
 end
 
-def partition_array(arr, pivot_index = 0)
-  wall = 0
-  pivot = arr[-1]
-  puts pivot  #= 53
-  (0..(arr.length-1)).each do |i|
-    if arr[i] < pivot    #4<53
-      #arr[wall], arr[i] = arr[i], arr[wall]
+def partition_array(arr, left, right)
+  wall = left
+  pivot = arr[right]
+
+  (left..(right-1)).each do |i|
+    if arr[i] < pivot
+      arr[wall], arr[i] = arr[i], arr[wall]
       wall += 1
-      p [arr[wall], arr[i]]
-    else
-      hold = arr[i]
-      arr[i] = arr[wall]
-      arr[wall] = hold
     end
   end
-    #p arr
-    #arr[wall+1], arr[-1] = arr[-1], arr[wall+1]
-    #puts arr[wall]
-    pivot_index = wall
+  # p arr
+  # puts "wall is no. #{wall}: #{arr[wall]}"
+  arr[wall], arr[right] = arr[right], arr[wall]
+  wall
 end
 
 # 1. Pick pivot (last element)
