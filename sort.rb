@@ -2,13 +2,9 @@ require 'benchmark'
 
 
 def insertion_sort(arr)
-
   arr.each_with_index do |ele, i|
-
     insert(arr, i-1, ele)
-
   end
-
   arr
 end
 
@@ -111,8 +107,41 @@ def suppress_output
   retval
 end
 
+def quick_sort(arr)
+  if arr.length < 2
+    return arr
+  else
+    pivot_index = partition_array(arr)
+    quick_sort(arr[0..pivot_index-1])
+    quick_sort(arr[pivot_index+1..-1])
+  end
+end
 
+def partition_array(arr, pivot_index = 0)
+  wall = 0
+  pivot = arr[-1]
+  puts pivot  #= 53
+  (0..(arr.length-1)).each do |i|
+    if arr[i] < pivot    #4<53
+      #arr[wall], arr[i] = arr[i], arr[wall]
+      wall += 1
+      p [arr[wall], arr[i]]
+    else
+      hold = arr[i]
+      arr[i] = arr[wall]
+      arr[wall] = hold
+    end
+  end
+    #p arr
+    #arr[wall+1], arr[-1] = arr[-1], arr[wall+1]
+    #puts arr[wall]
+    pivot_index = wall
+end
 
+# 1. Pick pivot (last element)
+# 2. Partition: move pivot to approx. the middle and get index and move smaller values to left of pivot
+# 3. Recursively call quick_sort on the first portion (all values smaller index than pivot)
+# 4. Recursively call quick_sort on the second portion and move values to the left of pivot
 
 
 
